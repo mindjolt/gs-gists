@@ -1,5 +1,7 @@
 #!/bin/sh
 
+command -v jq >/dev/null >/dev/null || brew install jq
+
 if [[ ! -d "Assets/Plugins" ]]; then
   echo "You must run this from the root of your Unity project."
   exit 1
