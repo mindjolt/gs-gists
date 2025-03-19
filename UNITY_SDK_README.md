@@ -8,12 +8,21 @@ set of C# and native (when applicable) source code along with a full suite of un
 tests. Projects built with this tool set will automatically become
 available in the Jam City Package Manager in the unity editor.
 
+## Export your GitHub Personal Access Token and User
+
+```bash
+export GH_PAT=<YOUR_GITHUB_PAT>
+export GH_USER=<YOUR_GITHUB_USERNAME>
+```
+
 ## Environment Setup
 
 To begin, you need to first ensure your work environment is set up with the
 appropriate tools. To do this, you need to execute the following:
 
-    curl --silent "https://raw.githubusercontent.com/mindjolt/gs-gists/master/sdk-dev-setup.sh" | bash
+```bash
+bash -c "$(curl --silent "https://raw.githubusercontent.com/mindjolt/gs-gists/master/sdk-dev-setup.sh")"
+```
 
 This will do the following:
 
@@ -28,7 +37,9 @@ This will do the following:
 To create a new, empty project, run the following in the directory in which
 you want the project folder created:
 
-     sbt new mindjolt/unity-sdk.g8
+```bash
+sbt new mindjolt/unity-sdk.g8
+```
 
 Follow the prompts to create your project.
 
@@ -42,9 +53,8 @@ The following are the important files and directories for any project:
 | build.sbt                | Drives the project build process, dependencies etc.                                                                                                                                                                      |
 | README.md                | Basic README file use to describe how to build the project. Details about the functionality of the project are in `doc/Unity.md`. You generally don't need to edit this unless you have some special build requirements. |
 | doc/Unity.md             | User-facing documentation about how to use whatever the project provides.                                                                                                                                                |
-| CHANGES.md               | Standard change log that *must* be updated with each release.                                                                                                                                                            |
+| CHANGELOG.md               | Standard change log that *must* be updated with each release.                                                                                                                                                            |
 | .gitignore               | A standard .gitignore file with most of the useful stuff already present.                                                                                                                                                |
-| .drone.yml               | The [Drone CI](https://drone.io/) file that drives the CI/build process on our drone system. You generally don't need to modify this.                                                                                    |
 | src/main/csharp          | The directory that should contain all of your csharp source code.                                                                                                                                                        |
 | src/test/csharp          | The directory that should contain all of you unit tests.                                                                                                                                                                 |
 | src/main/ios             | Optional directory that should contain any native iOS code that will be built with xcode.                                                                                                                                |
@@ -117,7 +127,7 @@ unityProject := unityProject.value.copy(
 ```
 
 Generally speaking, you will only need to modify `dependencies` in the above.
-Note that we default to using NET 25 and C# 4.0 to be as compatible as possible
+Note that we default to using NET 4.5 and C# 7.0 to be as compatible as possible
 with different versions of unity.
 
 The `depdendencies` describes other projects and libraries that this project depends on.
