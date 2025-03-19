@@ -16,7 +16,7 @@ fi
 
 brew upgrade
 brew install sbt nuget
-/usr/local/bin/nuget sources Add -Name Artifactory_Realm -Source https://artifactory.sgn.com/artifactory/api/nuget/nuget-local
+/opt/homebrew/bin/nuget sources Add -Name github -Source https://nuget.pkg.github.com/mindjolt/index.json -Username $GH_USER -Password $GH_PAT -StorePasswordInClearText
 
 export JAVA_HOME="$(/usr/libexec/java_home)"
 
@@ -32,7 +32,8 @@ last=$CWD
 cd /tmp
 sbt new mindjolt/unity-sdk.g8 --force --name=stub
 cd /tmp/stub
-sbt envSetup
+#This is not working, there is no documentation on how to do this or what the task is
+#sbt envSetup
 cd $last
 
 echo "*******************************************************************************************"

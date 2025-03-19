@@ -8,9 +8,10 @@ if [[ ! -d "Assets" ]] || [[ ! -d "ProjectSettings" ]]; then
 fi
 
 function fetch () {
+    token=$GH_PAT
     package=$1
-    latest=$(curl --silent -H "X-Result-Detail: info " "https://artifactory.sgn.com:443/artifactory/api/search/artifact?name=${package}.zip&repos=jcpm-release-local" | jq -r "(.results|=sort_by(.created)[-1].downloadUri).results")
-    curl --silent -o /tmp/package.zip ${latest}
+    latest=$(curl -s -H "Authorization: bearer ${token}" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/mindjolt/jcpm-release-local/contents/packages/${package}" | jq -r '.[] | select(.type == "dir") | .name' | sort -V | tail -n 1)
+    curl -s -H "Authorization: bearer ${token}" -H "Accept: application/vnd.github.raw+json" "https://api.github.com/repos/mindjolt/jcpm-release-local/contents/packages/${package}/${latest}/${package}.zip" -o /tmp/package.zip
     rm -rf ${package}
     unzip -q /tmp/package.zip
     rm /tmp/package.zip
@@ -24,7 +25,7 @@ while true; do
     case $yn in
         [Yy]* ) 
             echo "Installing Json.Net.Unity3D..."
-	    fetch "Json.Net.Unity3D"
+            fetch "Json.Net.Unity3D"
             break;;
         [Nn]* ) break;;
         * ) echo "Please answer y or n.";;
